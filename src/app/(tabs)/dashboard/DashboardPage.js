@@ -1,11 +1,22 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { Center, Box, Heading, Button } from 'native-base';
 
 export default function DashboardPage({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Página Dashboard após login!</Text>
-      <Button title="Sair" onPress={() => navigation.replace('Home')} />
-    </View>
+    <Center flex={1} bg="black">
+      <Box alignItems="center">
+        <Heading color="white" mb={4}>
+          Bem-vindo ao seu Dashboard!
+        </Heading>
+
+        <Button
+          colorScheme="primary"
+          variant="solid"
+          onPress={() => navigation.replace('Home')}
+        >
+          Sair
+        </Button>
+      </Box>
+    </Center>
   );
 }
