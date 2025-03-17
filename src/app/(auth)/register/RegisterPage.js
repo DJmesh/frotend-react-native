@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
+import { Center, Box, Heading, FormControl, Input, Button, Text, VStack } from 'native-base';
 import { registerUser } from '../../../services/authService';
 
 export default function RegisterPage({ navigation }) {
@@ -16,9 +16,7 @@ export default function RegisterPage({ navigation }) {
     setMensagem('');
     try {
       const data = await registerUser(nome, email, senha);
-      // Se der certo, data.message = "Usuário cadastrado com sucesso"
-      setMensagem(data.message);
-      // Redirecionar para a tela de login após alguns segundos ou imediatamente
+      setMensagem(data.message); 
       setTimeout(() => {
         navigation.navigate('Login');
       }, 1500);
@@ -30,46 +28,70 @@ export default function RegisterPage({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, padding: 20, justifyContent: 'center' }}>
-      <Text style={{ fontSize: 24, marginBottom: 10 }}>Criar Conta</Text>
+    <Center flex={1} bg="black" px={4}>
+      <Box w="100%" maxW="300" py={6}>
+        <Heading color="white" mb={6} textAlign="center" size="lg">
+          Criar Conta
+        </Heading>
 
-      <TextInput
-        placeholder="Nome"
-        value={nome}
-        onChangeText={setNome}
-        style={{ marginBottom: 15, borderBottomWidth: 1 }}
-      />
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={{ marginBottom: 15, borderBottomWidth: 1 }}
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Senha"
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-        style={{ marginBottom: 15, borderBottomWidth: 1 }}
-      />
+        <VStack space={4}>
+          <FormControl>
+            <FormControl.Label _text={{ color: 'white' }}>Nome</FormControl.Label>
+            <Input
+              variant="outline"
+              placeholder="Digite seu nome"
+              value={nome}
+              onChangeText={setNome}
+              color="white"
+            />
+          </FormControl>
 
-      {erro && (
-        <Text style={{ color: 'red', marginBottom: 15 }}>
-          Erro ao cadastrar. Verifique seus dados.
-        </Text>
-      )}
-      {mensagem && (
-        <Text style={{ color: 'green', marginBottom: 15 }}>
-          {mensagem}
-        </Text>
-      )}
+          <FormControl>
+            <FormControl.Label _text={{ color: 'white' }}>Email</FormControl.Label>
+            <Input
+              variant="outline"
+              placeholder="Digite seu email"
+              value={email}
+              onChangeText={setEmail}
+              color="white"
+              autoCapitalize="none"
+            />
+          </FormControl>
 
-      <Button
-        title={loading ? 'Cadastrando...' : 'Cadastrar'}
-        onPress={handleRegister}
-        disabled={loading}
-      />
-    </View>
+          <FormControl>
+            <FormControl.Label _text={{ color: 'white' }}>Senha</FormControl.Label>
+            <Input
+              variant="outline"
+              placeholder="Digite sua senha"
+              secureTextEntry
+              value={senha}
+              onChangeText={setSenha}
+              color="white"
+            />
+          </FormControl>
+
+          {erro && (
+            <Text color="red.400" textAlign="center">
+              Erro ao cadastrar. Verifique seus dados.
+            </Text>
+          )}
+          {mensagem && (
+            <Text color="green.400" textAlign="center">
+              {mensagem}
+            </Text>
+          )}
+
+          <Button
+            mt={2}
+            colorScheme="primary"
+            onPress={handleRegister}
+            isLoading={loading}
+            isDisabled={loading}
+          >
+            {loading ? 'Cadastrando...' : 'Cadastrar'}
+          </Button>
+        </VStack>
+      </Box>
+    </Center>
   );
 }
