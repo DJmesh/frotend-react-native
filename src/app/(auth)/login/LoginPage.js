@@ -17,22 +17,42 @@ export default function LoginPage({ navigation }) {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ flex: 1, padding: 20, justifyContent: 'center' }}>
+      <Text style={{ fontSize: 24, marginBottom: 20 }}>Acesse sua conta</Text>
+
       <TextInput 
         placeholder="Email" 
         value={email} 
         onChangeText={setEmail} 
-        style={{ marginBottom: 15, borderBottomWidth: 1 }}
+        style={{ marginBottom: 15, borderBottomWidth: 1, padding: 8 }}
       />
       <TextInput 
         placeholder="Senha" 
         secureTextEntry
         value={senha} 
         onChangeText={setSenha} 
-        style={{ marginBottom: 15, borderBottomWidth: 1 }}
+        style={{ marginBottom: 15, borderBottomWidth: 1, padding: 8 }}
       />
-      {error && <Text style={{ color: 'red' }}>Erro ao logar</Text>}
-      <Button title={loading ? 'Carregando...' : 'Login'} onPress={handleLogin} disabled={loading} />
+
+      {error && (
+        <Text style={{ color: 'red', marginBottom: 15 }}>
+          Erro ao logar. Verifique suas credenciais.
+        </Text>
+      )}
+
+      <Button
+        title={loading ? 'Carregando...' : 'Login'}
+        onPress={handleLogin}
+        disabled={loading}
+      />
+
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ marginBottom: 8 }}>Não tem conta?</Text>
+        <Button
+          title="Criar Conta"
+          onPress={() => navigation.navigate('Register')}
+        />
+      </View>
     </View>
   );
 }
